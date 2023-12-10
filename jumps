@@ -1,0 +1,16 @@
+from queue import Queue
+class Solution:
+    def jump(self, nums: List[int]) -> int:
+        record = 1000
+        n = len(nums)
+        q = Queue()
+        q.put((0, 0))
+        while not q.empty():
+            index, jumps = q.get()
+            if index == n-1:
+                record = min(record, jumps)
+                continue
+            for i in range(min(n-index-1, nums[index]), 0, -1):
+                q.put((i+index, jumps+1))
+            nums[index] = 0
+        return record
